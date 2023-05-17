@@ -5,8 +5,7 @@ let dead = 0;
 let lost = 0;
 
 for (let hole of holes) {
-    hole.addEventListener('click',  handler);
-    
+    hole.addEventListener('click',  handler); 
 }
 
 function handler(e) {
@@ -18,9 +17,17 @@ function handler(e) {
         lostCounter.textContent = lost;
     }
     if (lost === 5 || dead === 10) {
-        dead =0;
-        lost =0;
-        setTimeout(() => alert('GAME OVER'), 200) ;
+        dead = 0;
+        lost = 0;
+        
+        setTimeout(() => {
+            lostCounter.textContent = lost;
+            deadCounter.textContent = dead;
+            alert('GAME OVER'), 200
+        });
+        
     }
 }
+    
+
 
