@@ -17,4 +17,8 @@ function changePhrase() {
         
 }
 
+for(let phrase of arr) {
+    phrase.style.color = phrase.dataset.color;
+}
+
 setInterval(changePhrase, 1000);
