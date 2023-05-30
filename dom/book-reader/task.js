@@ -7,7 +7,7 @@ controllSize.addEventListener('click', onClick);
 
 
 function onClick(e) {
-    e.preventDefault;
+    e.preventDefault();
     let button = e.target;
     
     if ( ! button.classList.contains('font-size')) {
