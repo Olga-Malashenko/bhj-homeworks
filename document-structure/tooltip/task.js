@@ -16,8 +16,8 @@ function handler(e) {
 
     tooltip.classList.add('tooltip_active');
     tooltip.textContent = currentPhrase.title;
-    console.log(tooltip);
+    //console.log(tooltip);
 
-    currentPhrase.insertAdjacentHTML('afterEnd', tooltip);
+    currentPhrase.insertAdjacentHTML('afterend', tooltip);
 
 }
