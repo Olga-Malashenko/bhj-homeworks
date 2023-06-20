@@ -25,8 +25,6 @@ for (let btn of quantityControlInc) {
     })
 }
 
-
-
 for (let btn of addButtons) {
     btn.addEventListener('click', (e) => {
         cartTitle.hidden = false;
@@ -48,8 +46,7 @@ for (let btn of addButtons) {
         productQuantity.classList.add('cart__product-count');
         productQuantity.textContent = count;
         
-       let addedProducts = Array.from(document.querySelectorAll('.cart__product'));
-
+        let addedProducts = Array.from(document.querySelectorAll('.cart__product'));
 
         if (addedProducts && addedProducts.some(item => item.dataset.id === product.dataset.id)) {
             productCart = addedProducts.find(item => item.dataset.id === product.dataset.id);
