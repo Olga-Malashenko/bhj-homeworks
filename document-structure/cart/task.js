@@ -4,6 +4,9 @@ const addButtons = document.querySelectorAll('.product__add');
 const cart = document.querySelector('.cart__products');
 let count = 1;
 
+const deleteButtons = document.querySelectorAll('.product__del');
+const cartTitle = document.querySelector('.cart__title');
+
 for (let btn of quantityControlDec) {
     btn.addEventListener('click', (e) => {
         let quantity = btn.nextElementSibling;
@@ -26,6 +29,8 @@ for (let btn of quantityControlInc) {
 
 for (let btn of addButtons) {
     btn.addEventListener('click', (e) => {
+        cartTitle.hidden = false;
+
         let currentProduct = e.target.previousElementSibling;
         let currentCount = currentProduct.querySelector('.product__quantity-value').textContent;
 
@@ -61,5 +66,22 @@ for (let btn of addButtons) {
     })
 }
 
+for (let btn of deleteButtons) {
+    btn.addEventListener('click', (e) => {
+        let product = btn.closest('.product');
+        let addedProducts = Array.from(document.querySelectorAll('.cart__product'));
 
+        if (addedProducts && addedProducts.some(item => item.dataset.id === product.dataset.id)) {
+            productCart = addedProducts.find(item => item.dataset.id === product.dataset.id);
+            //let currentProduct = e.target.previousElementSibling;
+            productCart.remove();
+        }
+
+        addedProducts = Array.from(document.querySelectorAll('.cart__product'));
+        
+        if (addedProducts.length === 0) {  
+            cartTitle.hidden = true;
+        }
+    })
+}
 
