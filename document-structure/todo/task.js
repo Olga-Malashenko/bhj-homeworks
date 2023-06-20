@@ -15,7 +15,7 @@ btn.addEventListener('click', (e) => {
         taskTitle.textContent = input.value;
         let taskDelete = document.createElement('a');
         taskDelete.classList.add('task__remove');
-        taskDelete.textContent = '&times;'
+        taskDelete.innerHTML = '&times;'
         taskDelete.href = '#';
 
         list.appendChild(task);
