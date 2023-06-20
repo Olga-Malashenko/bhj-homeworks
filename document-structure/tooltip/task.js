@@ -22,7 +22,7 @@ function handler(e) {
         tooltip.textContent = currentPhrase.title;
         //console.log(tooltip);
 
-        currentPhrase.insertAdjacentHTML('afterEnd', tooltip);
+        currentPhrase.appendChild(tooltip);
     } else {
         tooltip.remove();
     }
