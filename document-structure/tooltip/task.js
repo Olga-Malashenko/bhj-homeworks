@@ -11,21 +11,17 @@ function handler(e) {
     e.preventDefault();
 
     let currentPhrase = e.target;
-    //console.log(currentPhrase);
+    const coordinates = (currentPhrase.getBoundingClientRect());
 
-    let tooltip = document.createElement('div');
-    tooltip.classList.add('tooltip');
-    tooltip.style = 'left: 0; top: 0';
-
-    if (! tooltip.classList.contains('tooltip_active')) {
+    if (currentPhrase.firstElementChild) {
+        currentPhrase.firstElementChild.remove();
+    } else {
+        let tooltip = document.createElement('div');
+        tooltip.classList.add('tooltip');
         tooltip.classList.add('tooltip_active');
         tooltip.textContent = currentPhrase.title;
-        //console.log(tooltip);
-
+        tooltip.style  = 'left: coordinates.left; top: coordinates.bottom';
         currentPhrase.appendChild(tooltip);
-    } else {
-        tooltip.remove();
     }
-    
-
+   
 }
