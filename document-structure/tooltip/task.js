@@ -11,7 +11,7 @@ function handler(e) {
     e.preventDefault();
 
     let currentPhrase = e.target;
-    const coordinates = (currentPhrase.getBoundingClientRect());
+    let coordinates = currentPhrase.getBoundingClientRect();
 
     if (currentPhrase.firstElementChild) {
         currentPhrase.firstElementChild.remove();
@@ -20,7 +20,12 @@ function handler(e) {
         tooltip.classList.add('tooltip');
         tooltip.classList.add('tooltip_active');
         tooltip.textContent = currentPhrase.title;
-        tooltip.style  = 'left: coordinates.left; top: coordinates.bottom';
+
+        //let left = coordinates.left;
+        //let top = coordinates.top;
+        
+        tooltip.style = 'left: coordinates.left; top: coordinates.bottom;';
+        //tooltip.style = `left: ${left}; top: ${top}`;
         currentPhrase.appendChild(tooltip);
     }
    
