@@ -6,6 +6,7 @@ let count = 1;
 
 const deleteButtons = document.querySelectorAll('.product__del');
 const cartTitle = document.querySelector('.cart__title');
+cartTitle.hidden = true;
 
 quantityControlDec.forEach((btn) => btn.addEventListener('click', handlerDec));
 quantityControlInc.forEach((btn) => btn.addEventListener('click', handlerInc));
@@ -73,11 +74,12 @@ function handlerDelete(e) {
     if (addedProducts && selectedProduct) {
         productCart = addedProducts.find(item => item.dataset.id === product.dataset.id);
         productCart.remove();
+        addedProducts = Array.from(document.querySelectorAll('.cart__product'));
+        if (addedProducts.length === 0) {  
+            cartTitle.hidden = true;
+        }
     }
     
-    if (addedProducts.length === 0) {  
-        cartTitle.hidden = true;
-    }
 }
 
 
