@@ -60,7 +60,9 @@ function handlerAdd(e) {
         productCart.appendChild(productImage);
         productCart.appendChild(productQuantity);
     }
+
     count = 1;
+    btn.previousElementSibling.querySelector('.product__quantity-value').textContent = count;
 }
 
 function handlerDelete(e) {
