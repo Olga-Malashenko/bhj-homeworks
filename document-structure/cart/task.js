@@ -7,78 +7,75 @@ let count = 1;
 const deleteButtons = document.querySelectorAll('.product__del');
 const cartTitle = document.querySelector('.cart__title');
 
-for (let btn of quantityControlDec) {
-    btn.addEventListener('click', (e) => {
-        let quantity = btn.nextElementSibling;
-        if (quantity.textContent >= 2) {
-            quantity.textContent -= 1;
-            count = Number(quantity.textContent);
-        }
-    })
-}
-
-for (let btn of quantityControlInc) {
-    btn.addEventListener('click', (e) => {
-        let quantity = btn.previousElementSibling;
-        quantity.textContent = Number(quantity.textContent) + 1;
+quantityControlDec.forEach((btn) => btn.addEventListener('click', handlerDec));
+quantityControlInc.forEach((btn) => btn.addEventListener('click', handlerInc));
+addButtons.forEach((btn) => btn.addEventListener('click', handlerAdd));
+deleteButtons.forEach((btn) => btn.addEventListener('click', handlerDelete));
+    
+function handlerDec(e) {
+    let quantity = e.target.nextElementSibling;
+    if (quantity.textContent >= 2) {
+        quantity.textContent -= 1;
         count = Number(quantity.textContent);
-    })
+    }
 }
 
-for (let btn of addButtons) {
-    btn.addEventListener('click', (e) => {
-        cartTitle.hidden = false;
-
-        let currentProduct = e.target.previousElementSibling;
-        let currentCount = currentProduct.querySelector('.product__quantity-value').textContent;
-
-        let product = btn.closest('.product');
-        let productCart = document.createElement('div');
-        productCart.classList.add('cart__product');
-        productCart.dataset.id = product.dataset.id;
-
-        let image = btn.closest('.product__controls').previousElementSibling;
-        let productImage = document.createElement('img');
-        productImage.classList.add('cart__product-image');
-        productImage.src = image.src;
-
-        let productQuantity = document.createElement('div');
-        productQuantity.classList.add('cart__product-count');
-        productQuantity.textContent = count;
-        
-        let addedProducts = Array.from(document.querySelectorAll('.cart__product'));
-
-        if (addedProducts && addedProducts.some(item => item.dataset.id === product.dataset.id)) {
-            productCart = addedProducts.find(item => item.dataset.id === product.dataset.id);
-            let newCount = Number(productCart.lastElementChild.textContent) + Number(currentCount);
-            productCart.lastElementChild.textContent = newCount;
-        }
-        else {
-            cart.appendChild(productCart);
-            productCart.appendChild(productImage);
-            productCart.appendChild(productQuantity);
-        }
-        
-        count = 1;
-    })
+function handlerInc(e) {
+    let quantity = e.target.previousElementSibling;
+    quantity.textContent = Number(quantity.textContent) + 1;
+    count = Number(quantity.textContent);
 }
 
-for (let btn of deleteButtons) {
-    btn.addEventListener('click', (e) => {
-        let product = btn.closest('.product');
-        let addedProducts = Array.from(document.querySelectorAll('.cart__product'));
+function handlerAdd(e) {
+    cartTitle.hidden = false;
+    let btn = e.target;
 
-        if (addedProducts && addedProducts.some(item => item.dataset.id === product.dataset.id)) {
-            productCart = addedProducts.find(item => item.dataset.id === product.dataset.id);
-            //let currentProduct = e.target.previousElementSibling;
-            productCart.remove();
-        }
+    let currentProduct = btn.previousElementSibling;
+    let currentCount = currentProduct.querySelector('.product__quantity-value').textContent;
 
-        addedProducts = Array.from(document.querySelectorAll('.cart__product'));
-        
-        if (addedProducts.length === 0) {  
-            cartTitle.hidden = true;
-        }
-    })
+    let product = btn.closest('.product');
+    let productCart = document.createElement('div');
+    productCart.classList.add('cart__product');
+    productCart.dataset.id = product.dataset.id;
+
+    let image = btn.closest('.product__controls').previousElementSibling;
+    let productImage = document.createElement('img');
+    productImage.classList.add('cart__product-image');
+    productImage.src = image.src;
+
+    let productQuantity = document.createElement('div');
+    productQuantity.classList.add('cart__product-count');
+    productQuantity.textContent = count;
+
+    let addedProducts = Array.from(document.querySelectorAll('.cart__product'));
+    let selectedProduct = addedProducts.some(item => item.dataset.id === product.dataset.id);
+
+    if (addedProducts && selectedProduct) {
+        productCart = addedProducts.find(item => item.dataset.id === product.dataset.id);
+        let newCount = Number(productCart.lastElementChild.textContent) + Number(currentCount);
+        productCart.lastElementChild.textContent = newCount;
+    }
+    else {
+        cart.appendChild(productCart);
+        productCart.appendChild(productImage);
+        productCart.appendChild(productQuantity);
+    }
+    count = 1;
 }
+
+function handlerDelete(e) {
+    let product = e.target.closest('.product');
+    let addedProducts = Array.from(document.querySelectorAll('.cart__product'));
+    let selectedProduct = addedProducts.some(item => item.dataset.id === product.dataset.id);
+
+    if (addedProducts && selectedProduct) {
+        productCart = addedProducts.find(item => item.dataset.id === product.dataset.id);
+        productCart.remove();
+    }
+    
+    if (addedProducts.length === 0) {  
+        cartTitle.hidden = true;
+    }
+}
+
 
