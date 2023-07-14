@@ -68,35 +68,33 @@ function handlerAdd(e) {
 
     function anime() {
         let locationImage = image.getBoundingClientRect();
-        //console.log(locationImage);
         let locationProduct = productImage.getBoundingClientRect();
-        //console.log(locationProduct);
-        let horiz = locationImage.x - locationProduct.x;
+        let horiz = locationProduct.x - locationImage.x;
         let vert = locationImage.y - locationProduct.y;
         
         let step = 4;
         let stepHoriz = horiz / step;
         let stepVert = vert / step;
-        //console.log(`Горизонталь: ${horiz}, Шаг по гориз: ${stepHoriz}, Вертикаль: ${vert}, Шаг по верт: ${stepVert}`);
         
-        let clone = productImage.cloneNode();
-        image.appendChild(clone);
-        clone.style = 'position: absolute';
+        let clone = image.cloneNode();
+        image.parentNode.appendChild(clone);
+        //clone.style = 'position: absolute';
 
-        setInterval(() => {                   // первый способ
+        /*setInterval(() => {                   // первый способ
             locationImage.x += stepHoriz;
-            locationImage.y += stepVert;
-            // тут надо как-то (как?) передать location.x , location.y - клону
-        }, 300);
-        // нужен clearInterval после 3х шагов. Через счетчик? Или при условии совпадения координат? (но погрешность!)
-
+            locationImage.y -= stepVert;
+            clone.style = `position: absolute; left: ${locationImage.x}px; top: ${locationImage.y}px;`;
+        }, 500);
+        // нужен clearInterval после 3х шагов. Через счетчик? */
+        
         for (let i = 1; i < step; i++) {    // второй способ
             locationImage.x += stepHoriz;
-            locationImage.y += stepVert;
+            locationImage.y -= stepVert;
             setTimeout(() => {
-                // передаем текущие координаты
-            }, 300);
+            clone.style = `position: absolute; left: ${locationImage.x}px; top: ${locationImage.y}px;`;
+            }, 500);
         }
+        
         clone.remove();
     }
 }
