@@ -17,7 +17,7 @@ function handler(e) {
         tooltip.classList.add('tooltip');
         tooltip.classList.add('tooltip_active');
         tooltip.textContent = currentPhrase.title;
-        tooltip.style = `left: ${coordinates.left}; top: ${coordinates.top}`;
+        tooltip.style = `left: ${coordinates.left}px; top: ${coordinates.top + 20}px`;
         currentPhrase.appendChild(tooltip);
     }
 }
