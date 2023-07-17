@@ -68,34 +68,31 @@ function handlerAdd(e) {
 
     function anime() {
         let locationImage = image.getBoundingClientRect();
+        let left = locationImage.left;
+        let top = locationImage.top;
         let locationProduct = productImage.getBoundingClientRect();
-        let horiz = locationProduct.x - locationImage.x;
-        let vert = locationImage.y - locationProduct.y;
+        let horiz = locationProduct.left - left;
+        let vert = top - locationProduct.top;
+        console.log(`vert: ${vert} and horiz: ${horiz}`);
         
         let step = 4;
         let stepHoriz = horiz / step;
         let stepVert = vert / step;
         
         let clone = image.cloneNode();
-        image.parentNode.appendChild(clone);
-        //clone.style = 'position: absolute';
+        image.parentElement.appendChild(clone);
 
-        /*setInterval(() => {                   // первый способ
-            locationImage.x += stepHoriz;
-            locationImage.y -= stepVert;
-            clone.style = `position: absolute; left: ${locationImage.x}px; top: ${locationImage.y}px;`;
-        }, 500);
-        // нужен clearInterval после 3х шагов. Через счетчик? */
-        
-        for (let i = 1; i < step; i++) {    // второй способ
-            locationImage.x += stepHoriz;
-            locationImage.y -= stepVert;
-            setTimeout(() => {
-            clone.style = `position: absolute; left: ${locationImage.x}px; top: ${locationImage.y}px;`;
-            }, 500);
+        let countForInterval = 1;
+        let id = setInterval(() => {
+            left += stepHoriz;
+            top -= stepVert;
+            countForInterval +=1;
+            clone.style = `position: absolute; left: ${left}px; top: ${top}px;`;
+        }, 300);
+        if(countForInterval === 3) {
+            clearInterval(id);
+            clone.remove();
         }
-        
-        clone.remove();
     }
 }
 
