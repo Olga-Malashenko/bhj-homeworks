@@ -67,32 +67,33 @@ function handlerAdd(e) {
     btn.previousElementSibling.querySelector('.product__quantity-value').textContent = count;
 
     function anime() {
-        let locationImage = image.getBoundingClientRect();
+        const locationImage = image.getBoundingClientRect();
         let left = locationImage.left;
         let top = locationImage.top;
-        let locationProduct = productImage.getBoundingClientRect();
-        let horiz = locationProduct.left - left;
-        let vert = top - locationProduct.top;
-        console.log(`vert: ${vert} and horiz: ${horiz}`);
-        
-        let step = 4;
-        let stepHoriz = horiz / step;
-        let stepVert = vert / step;
+        const locationProduct = productImage.getBoundingClientRect();
+     
+        const step = 4;
+        const stepHoriz = (locationProduct.left - left) / step;
+        const stepVert = (top - locationProduct.top) / step;
         
         let clone = image.cloneNode();
-        image.parentElement.appendChild(clone);
 
-        let countForInterval = 1;
+        let countForInterval = 0;
+
         let id = setInterval(() => {
+            if(countForInterval === 3) {
+                clearInterval(id);
+                clone.remove();
+                return;
+            }
+
             left += stepHoriz;
             top -= stepVert;
-            countForInterval +=1;
-            clone.style = `position: absolute; left: ${left}px; top: ${top}px;`;
-        }, 300);
-        if(countForInterval === 3) {
-            clearInterval(id);
-            clone.remove();
-        }
+            countForInterval += 1;
+            clone.style = `position: absolute; left: ${left}px; top: ${top}px`;
+            image.parentElement.appendChild(clone);
+        }, 400);
+        
     }
 }
 
