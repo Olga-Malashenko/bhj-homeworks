@@ -43,6 +43,8 @@ function handlerAdd(e) {
     let productImage = document.createElement('img');
     productImage.classList.add('cart__product-image');
     productImage.src = image.src;
+    let productImageElements = Array.from(document.querySelectorAll('.cart__product-image'));
+    let productImageElement = productImageElements.find(item => item.parentElement.dataset.id === product.dataset.id);
 
     let productQuantity = document.createElement('div');
     productQuantity.classList.add('cart__product-count');
@@ -52,6 +54,7 @@ function handlerAdd(e) {
     let selectedProduct = addedProducts.some(item => item.dataset.id === product.dataset.id);
 
     if (addedProducts && selectedProduct) {
+        
         productCart = addedProducts.find(item => item.dataset.id === product.dataset.id);
         let newCount = Number(productCart.lastElementChild.textContent) + Number(currentCount);
         productCart.lastElementChild.textContent = newCount;
@@ -62,7 +65,7 @@ function handlerAdd(e) {
         productCart.appendChild(productImage);
         productCart.appendChild(productQuantity);
     }
-
+    
     count = 1;
     btn.previousElementSibling.querySelector('.product__quantity-value').textContent = count;
 
@@ -70,18 +73,18 @@ function handlerAdd(e) {
         const locationImage = image.getBoundingClientRect();
         let left = locationImage.left;
         let top = locationImage.top;
-        const locationProduct = productImage.getBoundingClientRect();
+        const locationProduct = productImageElement.getBoundingClientRect();
      
-        const step = 4;
+        const step = 35;
         const stepHoriz = (locationProduct.left - left) / step;
         const stepVert = (top - locationProduct.top) / step;
         
         let clone = image.cloneNode();
 
-        let countForInterval = 0;
+        let countForInterval = 1;
 
         let id = setInterval(() => {
-            if(countForInterval === 3) {
+            if(countForInterval === step) {
                 clearInterval(id);
                 clone.remove();
                 return;
@@ -92,7 +95,7 @@ function handlerAdd(e) {
             countForInterval += 1;
             clone.style = `position: absolute; left: ${left}px; top: ${top}px`;
             image.parentElement.appendChild(clone);
-        }, 400);
+        }, 50);
         
     }
 }
@@ -112,7 +115,3 @@ function handlerDelete(e) {
     }
     
 }
-
-
-
-
