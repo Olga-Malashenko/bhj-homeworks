@@ -12,8 +12,8 @@ xhr.addEventListener('readystatechange', ()=> {
 
         for (let key in response) {
             let item = document.createElement('div');
+            item.classList.add('item');
             items.appendChild(item);
-            console.log(response[key]);
 
             let code = document.createElement('div');
             code.classList.add('item__code');
@@ -25,37 +25,14 @@ xhr.addEventListener('readystatechange', ()=> {
 
             let currency = document.createElement('div');
             currency.classList.add('item__currency');
-            currency.textContent = 'руб.';
+            currency.textContent = ' руб.';
 
             item.appendChild(code);
             item.appendChild(value);
             item.appendChild(currency);
-        }
-        
-
-        //let array = Array.from(response);
-        //console.log(array);
-
-        //let responseJson = xhr.responseText;
-        //let response = JSON.parse(responseJson);
-        //console.log(responseJson);
-        //console.log(response);
-        //console.log(12);
-
-        
-
-        for (let i of response) {
-            
-
-            
         }
     }
 });
 
 xhr.open('GET', 'https://students.netoservices.ru/nestjs-backend/slow-get-courses');
 xhr.send();
-
-//let response = JSON.parse(xhr.responseText);
-        //console.log(response.response.Valute);
-        //console.log(response);
-        //console.log(12);
