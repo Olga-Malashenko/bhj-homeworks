@@ -17,7 +17,8 @@ xhr.addEventListener('readystatechange', ()=> {
 
         answers.forEach(element => {
             let pollAnswer = document.createElement('button');
-            pollAnswer.classList.add('poll__answer');
+            pollAnswers.classList.add('poll__answers');
+            pollAnswer.classList.remove('poll__answers_active');
             pollAnswer.textContent = element;
             pollAnswers.appendChild(pollAnswer);
         });  
@@ -29,17 +30,40 @@ xhr.send();
 
 pollAnswers.addEventListener('click', (e)=> {
     alert('Спасибо, ваш голос засчитан!');
-    console.log(e.target);
-    console.log(answers);
+    //console.log(e.target);
+    //console.log(answers);
     numberAnswer = answers.indexOf(e.target.textContent);
     console.log(`Индекс : ${numberAnswer}`);
 
     const xhr = new XMLHttpRequest();
     xhr.addEventListener('readystatechange', ()=> {
-        console.log(xhr.responseText);
-        //let response = JSON.parse(xhr.responseText);
-        //console.log(response);
-    })
+        if (xhr.readyState === xhr.DONE) {
+            pollAnswers.classList.add('poll__answers_active');
+            pollAnswers.classList.remove('poll__answers');
+            let response = xhr.responseText;
+            let resp = JSON.parse(response);
+            
+            //console.log(resp.stat);
+            let sum = 0;
+            
+            for (let element of resp.stat) {
+                //console.log(`Количество голосов: ${element.votes}`);
+                sum += element.votes;
+                console.log(sum);
+            }
+            for (let element of resp.stat) {
+                let procent = element.votes / sum * 100;
+                let stat = document.createElement('div');
+                stat.textContent = `${element.answer} : ${procent.toFixed(2)}%`;
+                //console.log(element.answer);
+                
+                //console.log(procent.toFixed(2));
+                pollTitle.appendChild(stat);
+            }
+        }
+        
+
+    });
     xhr.open('POST', 'https://students.netoservices.ru/nestjs-backend/poll');
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.send(`vote=${numberVote}&answer=${numberAnswer}`);
