@@ -35,10 +35,14 @@ pollAnswers.addEventListener('click', (e)=> {
     console.log(`Индекс : ${numberAnswer}`);
 
     const xhr = new XMLHttpRequest();
+    xhr.addEventListener('readystatechange', ()=> {
+        console.log(xhr.responseText);
+        //let response = JSON.parse(xhr.responseText);
+        //console.log(response);
+    })
     xhr.open('POST', 'https://students.netoservices.ru/nestjs-backend/poll');
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.send(`vote=${numberVote}&answer=${numberAnswer}`);
-
     
 });
 
