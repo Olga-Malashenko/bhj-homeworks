@@ -10,26 +10,52 @@ xhr.addEventListener('readystatechange', ()=> {
         let response = JSON.parse(xhr.responseText).response.Valute;
         console.log(response);
 
-        let array = Array.from(response);
-        console.log(array);
-
-        for (let i of response) {
+        for (let key in response) {
             let item = document.createElement('div');
             items.appendChild(item);
+            console.log(response[key]);
 
             let code = document.createElement('div');
-            div.classList.add('item__code');
-            div.textContent = i.CharCode;
+            code.classList.add('item__code');
+            code.textContent = response[key].CharCode;
 
             let value = document.createElement('div');
-            div.classList.add('item__value');
-            div.textContent = i.Value;
+            value.classList.add('item__value');
+            value.textContent = response[key].Value;
+
+            let currency = document.createElement('div');
+            currency.classList.add('item__currency');
+            currency.textContent = 'руб.';
 
             item.appendChild(code);
             item.appendChild(value);
+            item.appendChild(currency);
+        }
+        
+
+        //let array = Array.from(response);
+        //console.log(array);
+
+        //let responseJson = xhr.responseText;
+        //let response = JSON.parse(responseJson);
+        //console.log(responseJson);
+        //console.log(response);
+        //console.log(12);
+
+        
+
+        for (let i of response) {
+            
+
+            
         }
     }
 });
 
 xhr.open('GET', 'https://students.netoservices.ru/nestjs-backend/slow-get-courses');
 xhr.send();
+
+//let response = JSON.parse(xhr.responseText);
+        //console.log(response.response.Valute);
+        //console.log(response);
+        //console.log(12);
