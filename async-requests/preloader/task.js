@@ -1,14 +1,23 @@
 const loader = document.querySelector('#loader');
 const items = document.querySelector('#items');
 
+let storedData;
+
+if (storedData) {
+    // вывести из локалСтор данные
+    console.log('есть');
+} else {
+    console.log('пусто');
+}
+
 const xhr = new XMLHttpRequest();
 
 xhr.addEventListener('readystatechange', ()=> {
+    
     if (xhr.readyState === xhr.DONE) {
         loader.classList.remove('loader_active');
 
         let response = JSON.parse(xhr.responseText).response.Valute;
-        console.log(response);
 
         for (let key in response) {
             let item = document.createElement('div');
@@ -27,10 +36,19 @@ xhr.addEventListener('readystatechange', ()=> {
             currency.classList.add('item__currency');
             currency.textContent = ' руб.';
 
+            let object = {
+                code: response[key].CharCode,
+                value: response[key].Value
+            }
+
+            localStorage.setItem(key, JSON.stringify(object));
+            storedData = localStorage.getItem(key);
+
             item.appendChild(code);
             item.appendChild(value);
             item.appendChild(currency);
         }
+        console.log(`after: ${storedData}`);
     }
 });
 
