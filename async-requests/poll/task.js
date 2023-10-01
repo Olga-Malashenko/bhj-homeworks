@@ -32,13 +32,17 @@ pollAnswers.addEventListener('click', (e)=> {
     console.log(e.target);
     console.log(answers);
     numberAnswer = answers.indexOf(e.target.textContent);
-    console.log(numberAnswer);
+    console.log(`Индекс : ${numberAnswer}`);
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'https://students.netoservices.ru/nestjs-backend/poll');
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.send(`vote=${numberVote}&answer=${numberAnswer}`);
+
+    
 });
 
-const xhr1 = new XMLHttpRequest;
-xhr1.open('POST', 'https://students.netoservices.ru/nestjs-backend/poll');
-xhr1.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-xhr1.send(`vote=${numberVote}&answer=${numberAnswer}`);
+
 
 
 
