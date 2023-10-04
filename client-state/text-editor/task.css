@@ -8,3 +8,19 @@ textarea {
   border: 1px solid #e2e2e2;
   box-sizing: border-box;
 }
+
+.button__clear {
+  display: none;
+  box-sizing: border-box;
+  max-width: 220px;
+  width: 30%;
+  padding: 10px 5px;
+  margin: 5px;
+  font-family: Golos, Arial, sans-serif;
+  border: 1px solid #e2e2e2;
+  background-color: chocolate;
+}
+
+.button__clear_active {
+  display: block;
+}
