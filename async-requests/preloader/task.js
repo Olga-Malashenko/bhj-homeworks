@@ -2,7 +2,6 @@ const loader = document.querySelector('#loader');
 const items = document.querySelector('#items');
 
 let fromStorage = JSON.parse(localStorage.getItem('data'));
-//let fromStorage;
 
 document.addEventListener("DOMContentLoaded", () => {
     if (fromStorage) {
@@ -23,26 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 createValuteList(response);
 
                 for (let key in response) {
-                    let item = document.createElement('div');
-                    item.classList.add('item');
-                    items.appendChild(item);
-
-                    let code = document.createElement('div');
-                    code.classList.add('item__code');
-                    code.textContent = response[key].CharCode;
-                    item.appendChild(code);
-
-                    let value = document.createElement('div');
-                    value.classList.add('item__value');
-
-                    value.textContent = response[key].Value;
-                    item.appendChild(value);
-
-                    let currency = document.createElement('div');
-                    currency.classList.add('item__currency');
-                    currency.textContent = ' руб.';
-                    item.appendChild(currency);
-
+                    
                     let object = {
                         CharCode: response[key].CharCode,
                         Value: response[key].Value
