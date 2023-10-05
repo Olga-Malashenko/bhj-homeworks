@@ -5,6 +5,7 @@ const password = form.querySelector('[name="password"]');
 const btn = document.querySelector('#signin__btn');
 const wellcome = document.querySelector('#welcome');
 const userID = wellcome.querySelector('#user_id');
+const logout = document.querySelector('#logout__btn');
 
 let storedUser = localStorage.getItem('user');
 if (storedUser) {
@@ -38,6 +39,13 @@ btn.addEventListener('click', (e) => {
             xhr.send(formData);
         }
 });
+
+logout.addEventListener('click', ()=> {
+    localStorage.removeItem('user');
+    wellcome.classList.remove('welcome_active');
+    signin.classList.add('signin_active');
+    cleanForm();
+})
 
 function wellcomeActive() {
     userID.textContent = localStorage.getItem('user');
