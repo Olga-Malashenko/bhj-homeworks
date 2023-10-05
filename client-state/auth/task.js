@@ -19,6 +19,21 @@ btn.addEventListener('click', ()=> {
             // обработка ответа
             if (xhr.readyState === xhr.DONE) {
                 console.log('2inside request form');
+                let response = JSON.parse(xhr.responseText);
+                console.log(response);
+                if(response.success === true) {
+                    localStorage.setItem('user', response.user_id);
+                    console.log(localStorage.getItem('user'));
+                    userID.textContent = localStorage.getItem('user');
+                    wellcome.classList.add('welcome_active');
+                    signin.classList.remove('signin_active');
+                    
+                } else {
+                    alert('Неверный логин/пароль');
+                    login.value = '';
+                    password.value = '';
+                }
+
             }
             
         });
