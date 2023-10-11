@@ -17,22 +17,20 @@ btn.addEventListener('click', (e) => {
         const formData = new FormData(form);
         if (!login.value || !password.value) {
             alert('Заполните форму');
-            cleanForm();
+            form.reset();
         } else if (login.value && password.value) {
             formData.append(login.value, password.value);
             const xhr = new XMLHttpRequest();
+            xhr.responseType = 'json';
 
-            xhr.addEventListener('readystatechange', () => {
-                if (xhr.readyState === xhr.DONE) {
-                    let response = JSON.parse(xhr.responseText);
+            xhr.addEventListener('load', () => {
                     if (response.success) {
                         localStorage.setItem('user', response.user_id);
                         wellcomeActive();
                     } else if (!response.success) {
                         alert('Неверный логин/пароль');
-                        cleanForm();
+                        form.reset();
                     }
-                }
             });
 
             xhr.open('POST', 'https://students.netoservices.ru/nestjs-backend/auth');
@@ -44,16 +42,11 @@ logout.addEventListener('click', ()=> {
     localStorage.removeItem('user');
     wellcome.classList.remove('welcome_active');
     signin.classList.add('signin_active');
-    cleanForm();
+    form.reset();
 })
 
 function wellcomeActive() {
     userID.textContent = localStorage.getItem('user');
     wellcome.classList.add('welcome_active');
     signin.classList.remove('signin_active');
-}
-
-function cleanForm() {
-    login.value = '';
-    password.value = '';
 }
